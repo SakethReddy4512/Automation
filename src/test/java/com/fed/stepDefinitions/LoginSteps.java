@@ -2,13 +2,12 @@ package com.fed.stepDefinitions;
 
 import com.fed.pages.LoginPage;
 import com.fed.utils.BaseTest;
+import com.fed.utils.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import static com.fed.utils.ConfigReader.get;
 
 import static com.fed.utils.BaseTest.driver;
 
@@ -19,14 +18,16 @@ public class LoginSteps {
     @Given("user is on login page")
     public void user_is_on_login_page() {
         BaseTest.initialize();
-        driver.get("https://opensource-demo.orangehrmlive.com");
+        driver.get(get("login_url"));
         loginPage = new LoginPage(driver);
     }
 
-    @When("user enters username {string} and password {string}")
-    public void user_enters_username_and_password(String user, String pass) {
-        loginPage.enterUserName(user);
-        loginPage.enterPassword(pass);
+    @When("user enters username and password")
+    public void user_enters_username_and_password() {
+        String username = ConfigReader.get("username");
+        String password = ConfigReader.get("password");
+        loginPage.enterUserName(username);
+        loginPage.enterPassword(password);
     }
 
     @And("user clicks login button")

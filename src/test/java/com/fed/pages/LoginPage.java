@@ -1,5 +1,6 @@
 package com.fed.pages;
 
+import com.fed.utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,15 +11,15 @@ import java.time.Duration;
 public class LoginPage {
     WebDriver driver;
 
-    By usernameField = By.xpath("//input[@name='username']");
-    By passwordField = By.xpath("//input[@name='password']");
-    By loginButton   = By.xpath("//button[@type='submit']");
+    By usernameField = By.xpath(ConfigReader.get("username_xpath"));
+    By passwordField = By.xpath(ConfigReader.get("password_xpath"));
+    By loginButton   = By.xpath(ConfigReader.get("login_button_xpath"));
     public LoginPage(WebDriver driver){
         this.driver=driver;
     }
     public void enterUserName(String user){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='username']")));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
         driver.findElement(usernameField).sendKeys(user);
     }
     public void enterPassword(String password){
