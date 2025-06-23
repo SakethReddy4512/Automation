@@ -2,6 +2,7 @@ package com.fed.stepDefinitions;
 
 import com.fed.pages.HomePage;
 import com.fed.pages.LoginPage;
+import com.fed.pages.TimePage;
 import com.fed.utils.BaseTest;
 import com.fed.utils.ConfigReader;
 import io.cucumber.java.en.And;
@@ -23,6 +24,7 @@ import static com.fed.utils.BaseTest.driver;
 public class LoginSteps {
     LoginPage loginPage;
     HomePage homePage;
+    TimePage timepage;
 
     @Given("user is on login page")
     public void user_is_on_login_page() {
@@ -73,6 +75,28 @@ public class LoginSteps {
         wait.until(ExpectedConditions.visibilityOfElementLocated(Adminxpath));
         WebElement adminHeader = driver.findElement(By.xpath(ConfigReader.get("AdminpageAdmin_xpath")));
         assert adminHeader.getText().equals("Admin");
+        BaseTest.quit();
+    }
+    @When("user clicks on time button")
+    public void user_clicks_on_time_button() {
+        timepage = new TimePage(driver);
+        timepage.clickTime();
+    }
+    @Then("user clicks on timesheets dropdown")
+    public void user_clicks_on_timesheets_dropdown() {
+        timepage.clickTimeSheets();
+    }
+    @Then("user clicks on mytimesheets dropdown")
+    public void user_clicks_on_mytimesheets_dropdown() {
+       timepage.clickMyTimeSheet();
+    }
+    @Then("User should be redirected to mytimesheets dashboard")
+    public void user_should_be_redirected_to_mytimesheets_dashboard() {
+        By mytimesheetheader = By.xpath(ConfigReader.get("mytimesheetheader_Xpath"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(mytimesheetheader));
+        WebElement adminHeader = driver.findElement(By.xpath(ConfigReader.get("mytimesheetheader_Xpath")));
+        assert adminHeader.getText().equals("My Timesheet");
         BaseTest.quit();
     }
 }

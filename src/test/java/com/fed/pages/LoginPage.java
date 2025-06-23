@@ -19,7 +19,7 @@ public class LoginPage {
     }
     public void enterUserName(String user){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
+        wait.until(ExpectedConditions.elementToBeClickable(usernameField));
         driver.findElement(usernameField).sendKeys(user);
     }
     public void enterPassword(String password){
